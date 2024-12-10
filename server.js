@@ -56,6 +56,5 @@ app.get("/api/github-user-details", async (req, res) => {
 
 // Avvia il server
 app.listen(port, () => {
-  console.log(`Token: ${process.env.GITHUB_TOKEN}`);
   console.log(`Server running on port ${port}`);
 });
