@@ -8,6 +8,7 @@ const app = express();
 const cors = require("cors");
 const port = process.env.PORT;
 
+app.set("trust proxy", 1);
 app.use(cors());
 
 const limiter = rateLimit({
