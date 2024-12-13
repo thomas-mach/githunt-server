@@ -12,7 +12,7 @@ app.use(cors());
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minuti
-  max: 50, // massimo richieste per ogni IP
+  max: 10, // massimo richieste per ogni IP
   message: "Too many attempts, please try again later.", // messaggio da inviare se il limite è raggiunto
 });
 
