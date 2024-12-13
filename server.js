@@ -3,16 +3,21 @@
 require("dotenv").config();
 const express = require("express");
 const axios = require("axios");
+const rateLimit = require("express-rate-limit");
 const app = express();
 const cors = require("cors");
-const port = process.env.PORT || 3000;
+const port = 3001;
+
 app.use(cors());
 
-// app.get("/", (req, res) => {
-//   res.send("Server is running!");
-// });
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minuti
+  max: 50, // massimo richieste per ogni IP
+  message: "Too many attempts, please try again later.", // messaggio da inviare se il limite è raggiunto
+});
 
-// Rotta per ottenere repository da GitHub
+app.use(limiter);
+
 app.get("/api/github-repos", async (req, res) => {
   const selectedOption = req.query.selectedOption || "";
   const searchValue = req.query.searchValue || "";
@@ -20,7 +25,7 @@ app.get("/api/github-repos", async (req, res) => {
   const pageToFetch = req.query.page || 1;
 
   const url = `https://api.github.com/search/${selectedOption}?q=${searchValue}&sort=${sortValue}&order=desc&per_page=100&page=${pageToFetch}`;
-  //   const url = `https://api.github.com/search/repositories?q=vue&sort=stars&order=desc&per_page=100&page=1`;
+
   try {
     const response = await axios.get(url, {
       headers: {
