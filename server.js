@@ -6,7 +6,7 @@ const axios = require("axios");
 const rateLimit = require("express-rate-limit");
 const app = express();
 const cors = require("cors");
-const port = 3001;
+const port = process.env.PORT;
 
 app.use(cors());
 
